@@ -49,7 +49,7 @@ Every screenshot in this section was captured in November 2026 from a Raspberry 
   <tr>
     <td width="50%" valign="top">
       <img src="assets/screenshots/uidesigner-rpi4-hdmi.png"
-           alt="UI Designer with sample.rc open: a toolbox of controls, a Settings dialog being designed, the resource tree and a property grid.">
+           alt="UI Designer with player.rc open: a toolbox of controls, a Player Preferences dialog being designed, the resource tree and a property grid.">
       <br><sub><b>UI Designer</b>, a native dialog and resource editor, editing a <code>.rc</code> dialog resource.</sub>
     </td>
     <td width="50%" valign="top">
