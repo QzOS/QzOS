@@ -2,13 +2,13 @@
 
 **QzOS is an independent operating system under construction: a native AArch64 kernel, a graphics stack written from the GPU command list up, and a desktop whose programming model is drawn from classic Windows NT, on a Unix-like foundation.**
 
-It is not a Linux distribution, a Windows clone, or a kernel experiment on its own. The aim is a complete system with its own kernel, system services, graphics and display drivers, desktop environment and applications. Much of it already runs on a Raspberry Pi; none of it is finished.
+It is not a Linux distribution, a Windows clone, or a kernel experiment on its own. The aim is a complete system with its own kernel, system services, graphics and display drivers, desktop environment and applications. Both the native kernel and the Linux-hosted graphical environment already run on real Raspberry Pi hardware, and development continues toward one integrated native system.
 
 <p align="center">
-  <img src="assets/screenshots/desktop-rpi4-hdmi.png" width="100%"
-       alt="The QzOS desktop: Program Manager with tiled program groups, Paint with a landscape drawing, File Manager browsing the home folder, and the Deckamp audio player with its equalizer, above a taskbar with a Start button and clock.">
+  <a href="assets/screenshots/desktop-rpi4-hdmi-full.png"><img src="assets/screenshots/desktop-rpi4-hdmi.png" width="100%"
+       alt="The QzOS desktop: Program Manager with tiled program groups, Paint with a landscape drawing, the Deckamp audio player and its equalizer, and File Manager, above a taskbar with the Start button."></a>
   <br>
-  <sub>The graphical userland on a Raspberry Pi 400, captured from its HDMI output: Program Manager, Paint, File Manager and Deckamp as separate processes on the QzOS window server. Hosted on the Linux kernel for now (see below).</sub>
+  <sub>The graphical userland on a Raspberry Pi 400, captured from its HDMI output: Program Manager, Paint, Deckamp and File Manager as separate processes on the QzOS window server, hosted on the Linux kernel for now (see below). Select the image for the full 1920×1080 frame.</sub>
 </p>
 
 ## Building from both ends
@@ -30,25 +30,20 @@ The two halves meet at a deliberately narrow boundary. Applications talk to thei
 **The graphics stack** is QzOS's own. It includes a client-side 2D engine with TrueType text and an SVG icon renderer; a window server and compositor that share GPU buffers with clients through images and fences; QzGL, a fixed-function OpenGL 1.1; and a renderer that drives the Raspberry Pi's V3D GPU with hand-built command lists, without Mesa, beside a software reference renderer. On the Pi the Linux DRM/KMS and V3D drivers are used for now. Native TOS display and GPU drivers are the long-term replacement.
 
 ```text
- Applications   Paint, Program Manager, File Manager, UI Designer, Deckamp, Browser, GL
-                     |                       |                        |
- Libraries      QzUI                    QzGL                     libshell
-                libui + libgdi          OpenGL 1.1               COM-style objects,
-                (GDI engine in client)  (software and V3D)       Shell Namespace
-                     +-----------+-----------+                        |
- Shared objects       GPU images + fences, never drawing calls        |
-                                 |                                    |
- Services       winsrv: windows, input, focus, compositor             |
-                                 |                                    |
- GPU            V3D command lists / software reference                |
- -------------------------------- system boundary --------------------+------
- Kernel         Linux host today (DRM/KMS, V3D, evdev)  |  TOS: the target
-                                                        |  (no graphics drivers yet)
+ Applications    Paint, Program Manager, Deckamp, Browser, GL programs, ...
+                          |                     |                  |
+ Libraries       QzUI (USER/GDI)          QzGL (OpenGL 1.1)     libshell
+                          +----------+----------+                  |
+ Window server        winsrv: images + fences in, composited out   |
+                                     |                             |
+ Graphics             V3D command lists, software reference        |
+ ------------------------------------+-----------------------------+-----
+ Kernel          Linux host today (DRM/KMS, V3D)   ->   TOS, the target
 ```
 
 ## QzOS in action
 
-Every image below was taken during this round from a Raspberry Pi 400 (the same BCM2711 SoC as the Pi 4). The machine ran the Linux-hosted graphical stack, and the HDMI output was captured through a USB capture card. The windows were arranged with a scripted virtual mouse and keyboard, through the window server's normal input path.
+Every screenshot in this section was captured in November 2026 from a Raspberry Pi 400 (the same BCM2711 SoC as the Pi 4). The machine ran the Linux-hosted graphical stack, and the HDMI output was captured through a USB capture card. The windows were arranged with a scripted virtual mouse and keyboard, through the window server's normal input path.
 
 <table>
   <tr>
@@ -72,7 +67,7 @@ Every image below was taken during this round from a Raspberry Pi 400 (the same 
     <td width="50%" valign="top">
       <img src="assets/screenshots/quake2-qzgl-rpi4-kms.jpg"
            alt="Quake II's demo rendered by QzGL: a corridor with crates and the player's weapon.">
-      <br><sub><b>QzGL</b> rendering the Quake II (GPL) timedemo on the V3D GPU, shown full-screen over KMS at 640×480. It holds the display rate, about 58 fps.</sub>
+      <br><sub><b>QzGL</b> running the Quake II (GPL) timedemo at 640×480: rendered on the V3D GPU and presented through KMS.</sub>
     </td>
   </tr>
 </table>
