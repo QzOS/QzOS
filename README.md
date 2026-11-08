@@ -102,7 +102,7 @@ The applications are not demos. Each one is a workload chosen to push the system
 
 The destination is a self-contained system: TOS underneath, native display and GPU drivers in place of Linux DRM/KMS, the window server and QzGL on top, and the desktop and its applications running as native TOS processes. Until then, Linux hosts the graphical half, and the boundary between the two halves is kept narrow so that the move stays possible.
 
-The desktop's look is changing as well. The classic NT-style presentation shown above is the stable base. [QzOS/design](https://github.com/QzOS/design) defines the next one: two themes, Glöd (dark) and Gryning (light), with shared colour roles and component measures, being brought into the toolkit one profile at a time.
+The desktop's look is changing as well. The classic NT-style presentation shown above is the stable base. [QzOS/design](https://html-preview.github.io/?url=https://github.com/QzOS/design/blob/main/lekplats/index.html) defines the next one: two themes, Glöd (dark) and Gryning (light), with shared colour roles and component measures, being brought into the toolkit one profile at a time.
 
 <p align="center">
   <img src="assets/screenshots/design-glod-start-panel.png" width="70%"
